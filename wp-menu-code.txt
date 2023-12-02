@@ -1,0 +1,20 @@
+//menu submenu class remove
+function replace_submenu_class($menu) {  
+  $menu = preg_replace('/ class="sub-menu"/','/ class="submenu" /',$menu);  
+  return $menu;  
+}  
+add_filter('wp_nav_menu','replace_submenu_class'); 
+
+
+//submenu li class remove
+function remove_submenu_li_class($classes, $item, $args) {
+    // Check if it's a submenu item
+    if ($args->theme_location == 'menu-1' && $item->menu_item_parent) {
+        // Remove the specific class you want to remove
+        $classes = array_diff($classes, array('submenu'));
+    }
+
+    return $classes;
+}
+
+add_filter('nav_menu_css_class', 'remove_submenu_li_class', 10, 3);
